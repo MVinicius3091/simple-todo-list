@@ -9,7 +9,6 @@ addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 function getArrayList() {
   return ARRAY_OBJECT;
 }
@@ -18,7 +17,7 @@ function getTotal() {
   let arrayStorage = getStorage("array_list");
   let total = null;
 
-  arrayStorage.length > 0 ? total = arrayStorage.length : 0;
+  arrayStorage.length > 0 ? total = arrayStorage.length : total = 0;
 
   let txtTotal = getElement('#txt-total');
   setHtml(txtTotal, total);
@@ -64,6 +63,16 @@ function removeAttr(element, attribute) {
 
 function setHtml(element, text) {
   element.innerHTML = text;
+}
+
+function toogleClass(element, className) {
+  let attr = getAttr(element, 'class');
+
+  if (attr.includes(className)) {
+    setAttr(getElement(element), 'class', 'form-control fade');
+  } else {
+    setAttr(getElement(element), 'class', 'form-control fade show');
+  }
 }
 
 function onlyString(input) {
@@ -162,34 +171,38 @@ function sleep() {
   return new Promise(r => setTimeout(r, 400));
 }
 
-async function templateGenerate() {
+async function templateGenerate(arrayList, text = 'Lista vazia!') {
   let txtTtml = "";
   let htmlList = getElement("#name-list");
-  let arrayList = getStorage("array_list");
+
   arrayList.reverse();
 
   await sleep();
 
-  arrayList.forEach((obj) => {
-    txtTtml += `<li class="list-group-item d-flex justify-content-between align-items-center my-2 px-1 py-2 m-0 shadow-lg">
-                    <p class="fs-5 p-0 m-0">
-                      ${String(obj.name).toLocaleUpperCase()}
-                    </p>
-                    <div class="d-flex justify-content-between">
-                      <button class="me-1 btn btn-success btn-sm" id="btnEditar" data-id="${obj.id}"
-                      data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
-                        Editar
-                      </button>
-                      <button class="btn btn-sm btn-danger" id="btnExcluir" data-id="${obj.id}"
-                      data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
-                        Excluir
-                      </button>
-                    </div>
-                </li>`;
-
-    setHtml(htmlList, txtTtml);
-  });
-
+  if (arrayList.length > 0) {
+    arrayList.forEach((obj) => {
+      txtTtml += `<li class="list-group-item d-flex justify-content-between align-items-center my-2 px-1 py-2 m-0 shadow-lg">
+                      <p class="fs-5 p-0 m-0">
+                        ${String(obj.name).toLocaleUpperCase()}
+                      </p>
+                      <div class="d-flex justify-content-between">
+                        <button class="me-1 btn btn-success btn-sm" id="btnEditar" data-id="${obj.id}"
+                        data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
+                          Editar
+                        </button>
+                        <button class="btn btn-sm btn-danger" id="btnExcluir" data-id="${obj.id}"
+                        data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
+                          Excluir
+                        </button>
+                      </div>
+                  </li>`;
+  
+      setHtml(htmlList, txtTtml);
+    });
+  } else {
+    setHtml(htmlList, text);
+  }
+  
   getTotal();
 }
 
@@ -223,3 +236,18 @@ listenerEvent('html', 'click', (event) => {
   }
 
 });
+
+async function serachList(element) {
+
+  let arrayList = getArrayList();
+  let searchValue = getElement(element).value;
+
+  arrayList = arrayList.filter(search => {
+    if (search.name.includes(searchValue)) {
+      return [search];
+    }
+  });
+
+  await sleep(); 
+  templateGenerate(arrayList, 'Nenhum resultado encontrado!');
+}

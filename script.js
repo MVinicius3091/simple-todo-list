@@ -1,10 +1,23 @@
 
-templateGenerate();
+templateGenerate(getArrayList());
 
 let btnAdc = getElement('#btnAdicionar');
 
 listenerEvent('#inputText', 'input', (event) => {
   onlyString(event);
+});
+
+listenerEvent('#inputSearch', 'input', (event) => {
+  onlyString(event);
+  serachList('#inputSearch');
+});
+
+listenerEvent('#inputEdit', 'input', (event) => {
+  onlyString(event);
+});
+
+listenerEvent('#btn-search', 'click', () => {
+  toogleClass('#inputSearch', 'show');
 });
 
 listenerEvent('#btnAdicionar', 'click', () => {
@@ -17,10 +30,11 @@ listenerEvent('#btnAdicionar', 'click', () => {
   }
 
   pushObject({name: inputText.value});
-
   clearCamp(inputText);
 
-  templateGenerate();
+  templateGenerate(getArrayList());
+  msgAlert('Adicionado com sucesso!', 'success');
+
 });
 
 listenerEvent('#btnEdit', 'click', (event) => {
@@ -36,7 +50,8 @@ listenerEvent('#btnEdit', 'click', (event) => {
 
   setStorage('array_list', arrayList);
   closeModal('#editModal');
-  templateGenerate();
+  templateGenerate(getArrayList());
+  msgAlert('Editado com sucesso!', 'success');
 
 });
 
@@ -52,7 +67,9 @@ listenerEvent('#btnDeleted', 'click', (event) => {
 
   setStorage('array_list', arrayList);
   closeModal('#deleteModal');
-  templateGenerate();
+  templateGenerate(getArrayList());
+  msgAlert('Excluído com sucesso!', 'success');
+
 });
 
 
