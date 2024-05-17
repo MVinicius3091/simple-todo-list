@@ -1,10 +1,5 @@
 
 templateGenerate(getArrayList());
-<<<<<<< HEAD
-=======
-
-let btnAdc = getElement('#btnAdicionar');
->>>>>>> 47f9f08c6f3d0a9b6a2bbb1f556410408983216f
 
 listenerEvent('#inputText', 'input', (event) => {
   onlyString(event);
@@ -21,11 +16,8 @@ listenerEvent('#inputEdit', 'input', (event) => {
 
 listenerEvent('#btn-search', 'click', () => {
   toogleClass('#inputSearch', 'show');
-<<<<<<< HEAD
   clearCamp(getElement('#inputSearch'));
   templateGenerate(getArrayList());
-=======
->>>>>>> 47f9f08c6f3d0a9b6a2bbb1f556410408983216f
 });
 
 listenerEvent('#btnAdicionar', 'click', () => {
