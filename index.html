@@ -46,6 +46,21 @@
         <span class="fs-3" id="txt-total">0</span>
       </div>
 
+      <div class="mx-2">
+        <button 
+          class="btn btn-danger float-end"
+          data-bs-toggle="modal" 
+          data-bs-target="#deleteAllModal">
+          Excluir todos
+        </button>
+        <button
+          class="btn btn-dark float-end mx-2"
+          id="btnSelect"
+        >
+          Selecionar todos
+        </button>
+      </div>
+
       <ul class="w-100 px-2 m-auto list-group" id="name-list"></ul>
     </main>
 
@@ -117,6 +132,43 @@
               Não
             </button>
             <button type="button" class="btn btn-primary" id="btnDeleted">
+              Sim, desejo excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade modal-lg"
+      id="deleteAllModal"
+      tabindex="-1"
+      aria-labelledby="deleteAllModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteAllModalLabel">Excluir</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h4>Deseja realmente excluir da toda a lista?</h4>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Não
+            </button>
+            <button type="button" class="btn btn-primary" id="btnDeletedAll">
               Sim, desejo excluir
             </button>
           </div>

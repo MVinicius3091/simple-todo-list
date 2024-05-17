@@ -1,8 +1,9 @@
 ARRAY_OBJECT = [];
+ARRAY_SELECT = [];
 
 addEventListener("DOMContentLoaded", () => {
   let arrayStorage = getStorage("array_list");
-  if (arrayStorage.length > 0) {
+  if (arrayStorage && arrayStorage.length > 0) {
     arrayStorage.forEach((obj) => {
       ARRAY_OBJECT.push(obj);
     });
@@ -17,7 +18,7 @@ function getTotal() {
   let arrayStorage = getStorage("array_list");
   let total = null;
 
-  arrayStorage.length > 0 ? total = arrayStorage.length : total = 0;
+  (arrayStorage && arrayStorage.length > 0) ? total = arrayStorage.length : total = 0;
 
   let txtTotal = getElement('#txt-total');
   setHtml(txtTotal, total);
@@ -148,6 +149,11 @@ function clearStorage() {
   localStorage.clear();
 }
 
+function clearList() {
+  ARRAY_OBJECT = [];
+  clearStorage();
+}
+
 function clearCamp(camp) {
   camp.value = "";
 }
@@ -175,22 +181,23 @@ async function templateGenerate(arrayList, text = 'Lista vazia!') {
   let txtTtml = "";
   let htmlList = getElement("#name-list");
 
-  arrayList.reverse();
-
   await sleep();
 
   if (arrayList.length > 0) {
     arrayList.forEach((obj) => {
       txtTtml += `<li class="list-group-item d-flex justify-content-between align-items-center my-2 px-1 py-2 m-0 shadow-lg">
-                      <p class="fs-5 p-0 m-0">
+                      <div class="d-flex">
+                        <input type="checkbox" class="mx-2 inputSelect" data-id="${obj.id}" onclick="selectList(event)">
+                        <p class="fs-5 p-0 m-0">
                         ${String(obj.name).toLocaleUpperCase()}
-                      </p>
+                        </p>
+                      </div>    
                       <div class="d-flex justify-content-between">
-                        <button class="me-1 btn btn-success btn-sm" id="btnEditar" data-id="${obj.id}"
+                        <button class="me-1 btn btn-success btn-sm" data-id="${obj.id}"
                         data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
                           Editar
                         </button>
-                        <button class="btn btn-sm btn-danger" id="btnExcluir" data-id="${obj.id}"
+                        <button class="btn btn-sm btn-danger" data-id="${obj.id}"
                         data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
                           Excluir
                         </button>
@@ -204,6 +211,7 @@ async function templateGenerate(arrayList, text = 'Lista vazia!') {
   }
   
   getTotal();
+  ARRAY_SELECT = [];
 }
 
 function editList(event) {
@@ -222,8 +230,23 @@ function editList(event) {
 
 function deleteList(event) {
   let getId = event.target.dataset.id;
-  let btnDeleted = getElement('#btnDeleted');
+  let btnDeleted = getElement('.btnDeleted');
   setAttr(btnDeleted, 'data-delete-id', getId);
+}
+
+function selectList(event) {
+  let targetElement = event.target;
+  let getId = targetElement.dataset.id;
+
+  if (targetElement.checked) {
+    ARRAY_SELECT.push(getId);
+  } else {
+    ARRAY_SELECT.filter((v,i) => {
+      if (v.includes(getId)) {
+        ARRAY_SELECT.splice(i, 1);
+      }
+    });
+  }
 }
 
 listenerEvent('html', 'click', (event) => {
