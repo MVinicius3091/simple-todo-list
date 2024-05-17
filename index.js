@@ -18,11 +18,7 @@ function getTotal() {
   let arrayStorage = getStorage("array_list");
   let total = null;
 
-<<<<<<< HEAD
   (arrayStorage && arrayStorage.length > 0) ? total = arrayStorage.length : total = 0;
-=======
-  arrayStorage.length > 0 ? total = arrayStorage.length : total = 0;
->>>>>>> 47f9f08c6f3d0a9b6a2bbb1f556410408983216f
 
   let txtTotal = getElement('#txt-total');
   setHtml(txtTotal, total);
@@ -184,18 +180,12 @@ function sleep() {
 async function templateGenerate(arrayList, text = 'Lista vazia!') {
   let txtTtml = "";
   let htmlList = getElement("#name-list");
-<<<<<<< HEAD
-=======
-
-  arrayList.reverse();
->>>>>>> 47f9f08c6f3d0a9b6a2bbb1f556410408983216f
 
   await sleep();
 
   if (arrayList.length > 0) {
     arrayList.forEach((obj) => {
       txtTtml += `<li class="list-group-item d-flex justify-content-between align-items-center my-2 px-1 py-2 m-0 shadow-lg">
-<<<<<<< HEAD
                       <div class="d-flex">
                         <input type="checkbox" class="mx-2 inputSelect" data-id="${obj.id}" onclick="selectList(event)">
                         <p class="fs-5 p-0 m-0">
@@ -208,17 +198,6 @@ async function templateGenerate(arrayList, text = 'Lista vazia!') {
                           Editar
                         </button>
                         <button class="btn btn-sm btn-danger" data-id="${obj.id}"
-=======
-                      <p class="fs-5 p-0 m-0">
-                        ${String(obj.name).toLocaleUpperCase()}
-                      </p>
-                      <div class="d-flex justify-content-between">
-                        <button class="me-1 btn btn-success btn-sm" id="btnEditar" data-id="${obj.id}"
-                        data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
-                          Editar
-                        </button>
-                        <button class="btn btn-sm btn-danger" id="btnExcluir" data-id="${obj.id}"
->>>>>>> 47f9f08c6f3d0a9b6a2bbb1f556410408983216f
                         data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
                           Excluir
                         </button>
