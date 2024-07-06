@@ -115,11 +115,11 @@ function createElement(element, className = "") {
 }
 
 function msgAlert(message, type = "danger") {
-  let html = getElement("html");
+  let containerAlert = getElement(".alert-message");
 
   let div = createElement(
     "div",
-    `alert alert-${type} alert-dismissible position-absolute top-0 m-4`
+    `alert alert-${type} alert-dismissible`
   );
   let strong = createElement("strong");
   let button = createElement("button", "btn-close");
@@ -129,7 +129,7 @@ function msgAlert(message, type = "danger") {
   div.append(strong);
   div.append(button);
 
-  html.append(div);
+  containerAlert.append(div);
 
   setTimeout(() => {
     div.remove();
@@ -191,17 +191,32 @@ async function templateGenerate(arrayList, text = 'Lista vazia!') {
                         <p class="fs-5 p-0 m-0">
                         ${String(obj.name).toLocaleUpperCase()}
                         </p>
-                      </div>    
-                      <div class="d-flex justify-content-between">
-                        <button class="me-1 btn btn-success btn-sm" data-id="${obj.id}"
-                        data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
-                          Editar
-                        </button>
-                        <button class="btn btn-sm btn-danger" data-id="${obj.id}"
-                        data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
-                          Excluir
-                        </button>
+                      </div>  
+                      
+                      <div class="btn-group dropstart">
+                        <button type="button" class="rounded-circle text-center border-0 bg-info"
+                                    style="width: 40px; height: 40px;" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#f0f2f4" width="5" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                                </button>
+                        <ul class="dropdown-menu">
+                          <div class="d-flex justify-content-between flex-column">
+                            <li>
+                              <button class="dropdown-item" data-id="${obj.id}"
+                              data-bs-toggle="modal" data-bs-target="#editModal" onclick="editList(event)">
+                                Editar
+                              </button>
+                            </li>
+                           
+                            <li>
+                               <button class="dropdown-item" data-id="${obj.id}"
+                              data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteList(event)">
+                                Excluir
+                              </button>
+                            </li>
+                          </div>
+                        </ul>
                       </div>
+                      
                   </li>`;
   
       setHtml(htmlList, txtTtml);
