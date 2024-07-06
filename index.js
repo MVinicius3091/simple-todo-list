@@ -230,7 +230,7 @@ function editList(event) {
 
 function deleteList(event) {
   let getId = event.target.dataset.id;
-  let btnDeleted = getElement('.btnDeleted');
+  let btnDeleted = getElement('#btnDeleted');
   setAttr(btnDeleted, 'data-delete-id', getId);
 }
 
